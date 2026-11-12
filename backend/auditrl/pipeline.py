@@ -9,6 +9,8 @@ from auditrl.config import Settings, get_settings
 from auditrl.extraction import extract_claims
 from auditrl.findings import build_finding, check_claim
 from auditrl.intake import ParsedDocument, store_document
+from auditrl.judge import JudgeClient
+from auditrl.judge.audit import judge_finding
 from auditrl.llm import PROMPT_VERSION, LLMClient, get_client
 from auditrl.models import (
     AuditRun,
@@ -57,9 +59,16 @@ def run_audit(
     llm: LLMClient | None = None,
     engine: Engine | None = None,
     settings: Settings | None = None,
+    judge: JudgeClient | None = None,
 ) -> AuditRun:
     settings = settings or get_settings()
     engine = engine or get_engine()
+    if judge is None and settings.judge_model:
+        judge = JudgeClient(
+            settings.judge_model,
+            api_base=settings.judge_api_base,
+            api_key=settings.judge_api_key,
+        )
     with Session(engine) as session:
         run = session.get(AuditRun, audit_id)
         if run is None:
@@ -70,7 +79,7 @@ def run_audit(
         session.commit()
         started = time.perf_counter()
         try:
-            _execute(session, run, llm, settings)
+            _execute(session, run, llm, settings, judge)
             run.status = AuditStatus.completed
         except Exception as exc:
             log.exception("audit %s failed", audit_id)
@@ -80,16 +89,23 @@ def run_audit(
             run.error = f"{type(exc).__name__}: {exc}"
         run.latency_s = round(time.perf_counter() - started, 3)
         run.completed_at = datetime.now(UTC)
-        run.prompt_tokens = llm.usage.prompt_tokens
-        run.completion_tokens = llm.usage.completion_tokens
-        run.cost_usd = round(llm.usage.cost_usd, 6)
+        usages = [llm.usage] + ([judge.usage] if judge else [])
+        run.prompt_tokens = sum(u.prompt_tokens for u in usages)
+        run.completion_tokens = sum(u.completion_tokens for u in usages)
+        run.cost_usd = round(sum(u.cost_usd for u in usages), 6)
         session.add(run)
         session.commit()
         session.refresh(run)
         return run
 
 
-def _execute(session: Session, run: AuditRun, llm: LLMClient, settings: Settings) -> None:
+def _execute(
+    session: Session,
+    run: AuditRun,
+    llm: LLMClient,
+    settings: Settings,
+    judge: JudgeClient | None = None,
+) -> None:
     docs = session.exec(select(Document).where(Document.audit_id == run.id)).all()
     report = next(d for d in docs if d.kind == DocumentKind.report)
     sources = [d for d in docs if d.kind == DocumentKind.source]
@@ -117,6 +133,17 @@ def _execute(session: Session, run: AuditRun, llm: LLMClient, settings: Settings
         session.add(claim_row)
         session.flush()
         if not c.checkable:
+            continue
+        if judge is not None:
+            session.add(
+                judge_finding(
+                    claim_row,
+                    index,
+                    judge,
+                    top_k=settings.judge_top_k,
+                    rel_tol=settings.relative_tolerance,
+                )
+            )
             continue
         checks = check_claim(
             c.model_copy(update={"text": claim_row.text}),

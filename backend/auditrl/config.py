@@ -24,6 +24,13 @@ class Settings(BaseSettings):
     llm_rationale: bool = True
     reviewer: str = "anonymous"
 
+    # Phase 3 judge: when set, a judge model rules on each claim instead of the verifiers.
+    judge_model: str = ""
+    judge_api_base: str = ""  # OpenAI-compatible endpoint, e.g. the Modal vLLM server
+    judge_api_key: str = ""
+    judge_top_k: int = 8
+    training_dir: Path = Path(__file__).resolve().parents[2] / "data" / "training"
+
     # Phase 2 benchmark
     bench_dir: Path = Path(__file__).resolve().parents[2] / "data" / "benchmark"
     sec_user_agent: str = ""  # SEC requires "Name email@domain" for EDGAR API access
@@ -39,6 +46,8 @@ class Settings(BaseSettings):
 
     def config_hash(self) -> str:
         payload = self.model_dump(include={"model", "temperature", "relative_tolerance"})
+        if self.judge_model:
+            payload |= self.model_dump(include={"judge_model", "judge_api_base", "judge_top_k"})
         return hashlib.sha256(json.dumps(payload, sort_keys=True).encode()).hexdigest()[:12]
 
 
