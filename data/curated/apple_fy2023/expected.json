@@ -1,0 +1,34 @@
+{
+  "case_id": "apple_fy2023",
+  "company": "Apple Inc.",
+  "labels": [
+    {
+      "quote": "Apple reported total net sales of $383.3 billion in fiscal 2023 (Source: Apple 10-K FY2023).",
+      "verdict": "valid"
+    },
+    {
+      "quote": "Total net sales declined 2.8% from $394.3 billion in fiscal 2022 to $383.3 billion in fiscal 2023.",
+      "verdict": "valid"
+    },
+    {
+      "quote": "Services net sales grew 11.2% from $78.1 billion in fiscal 2022 to $85.2 billion in fiscal 2023.",
+      "verdict": "invalid",
+      "error_type": "arithmetic_error",
+      "correction_contains": "9.1%"
+    },
+    {
+      "quote": "Gross margin was $169.1 billion in fiscal 2023.",
+      "verdict": "valid"
+    },
+    {
+      "quote": "Research and development expense was $26.3 billion in fiscal 2023.",
+      "verdict": "invalid",
+      "error_type": "wrong_period",
+      "correction_contains": "$29.9 billion"
+    },
+    {
+      "quote": "Net income was $97.0 billion in fiscal 2023.",
+      "verdict": "valid"
+    }
+  ]
+}

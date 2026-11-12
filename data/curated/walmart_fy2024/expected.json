@@ -1,0 +1,30 @@
+{
+  "case_id": "walmart_fy2024",
+  "company": "Walmart Inc.",
+  "labels": [
+    {
+      "quote": "Walmart's total revenues increased 6.0% from $611.3 billion in fiscal 2023 to $648.1 billion in fiscal 2024.",
+      "verdict": "valid"
+    },
+    {
+      "quote": "Operating income grew 32.2% from $20.4 billion in fiscal 2023 to $27.0 billion in fiscal 2024.",
+      "verdict": "valid"
+    },
+    {
+      "quote": "Consolidated net income attributable to Walmart was $15.5 billion in fiscal 2024.",
+      "verdict": "valid"
+    },
+    {
+      "quote": "Operating margin was 5.2% in fiscal 2024, based on operating income of $27.0 billion on total revenues of $648.1 billion.",
+      "verdict": "invalid",
+      "error_type": "arithmetic_error",
+      "correction_contains": "4.2%"
+    },
+    {
+      "quote": "Total revenues were $661.1 billion in fiscal 2024 (Source: Walmart 10-K FY2024).",
+      "verdict": "invalid",
+      "error_type": "misstated_figure",
+      "correction_contains": "$648.1 billion"
+    }
+  ]
+}

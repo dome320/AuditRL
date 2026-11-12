@@ -1,0 +1,30 @@
+{
+  "case_id": "cocacola_2023",
+  "company": "The Coca-Cola Company",
+  "labels": [
+    {
+      "quote": "Coca-Cola's net operating revenues grew 6.4% from $43.0 billion in 2022 to $45.8 billion in 2023.",
+      "verdict": "valid"
+    },
+    {
+      "quote": "Operating income was $11.3 billion in 2023, an operating margin of 24.7% on net operating revenues of $45.8 billion.",
+      "verdict": "valid"
+    },
+    {
+      "quote": "Net income attributable to shareowners was $10.7 billion in 2023 (Source: Coca-Cola 10-K 2022).",
+      "verdict": "invalid",
+      "error_type": "citation_mismatch",
+      "correction_contains": "Coca-Cola 10-K 2023"
+    },
+    {
+      "quote": "Operating income rose 3.7% from $10.9 billion in 2022 to $11.3 billion in 2023.",
+      "verdict": "valid"
+    },
+    {
+      "quote": "Net operating revenues were $43.0 billion in 2023.",
+      "verdict": "invalid",
+      "error_type": "wrong_period",
+      "correction_contains": "$45.8 billion"
+    }
+  ]
+}

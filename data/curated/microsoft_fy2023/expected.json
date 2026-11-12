@@ -1,0 +1,30 @@
+{
+  "case_id": "microsoft_fy2023",
+  "company": "Microsoft Corporation",
+  "labels": [
+    {
+      "quote": "Microsoft's total revenue rose 6.9% from $198.3 billion in fiscal 2022 to $211.9 billion in fiscal 2023.",
+      "verdict": "valid"
+    },
+    {
+      "quote": "Operating income reached $88.5 billion in fiscal 2023, an operating margin of 41.8% on revenue of $211.9 billion.",
+      "verdict": "valid"
+    },
+    {
+      "quote": "Net income was $72.4 billion in fiscal 2023 (Source: Microsoft 10-K FY2023).",
+      "verdict": "valid"
+    },
+    {
+      "quote": "Gross margin was $164.1 billion in fiscal 2023.",
+      "verdict": "invalid",
+      "error_type": "misstated_figure",
+      "correction_contains": "$146.1 billion"
+    },
+    {
+      "quote": "Operating income was $83.4 billion in fiscal 2023.",
+      "verdict": "invalid",
+      "error_type": "wrong_period",
+      "correction_contains": "$88.5 billion"
+    }
+  ]
+}

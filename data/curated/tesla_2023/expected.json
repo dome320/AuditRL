@@ -1,0 +1,24 @@
+{
+  "case_id": "tesla_2023",
+  "company": "Tesla, Inc.",
+  "labels": [
+    {
+      "quote": "Tesla's total revenues increased 18.8% from $81.5 billion in 2022 to $96.8 billion in 2023.",
+      "verdict": "valid"
+    },
+    {
+      "quote": "Income from operations fell 34.9% from $13.7 billion in 2022 to $8.9 billion in 2023.",
+      "verdict": "valid"
+    },
+    {
+      "quote": "Operating margin was 12.2% in 2023, based on income from operations of $8.9 billion and total revenues of $96.8 billion.",
+      "verdict": "invalid",
+      "error_type": "arithmetic_error",
+      "correction_contains": "9.2%"
+    },
+    {
+      "quote": "Net income attributable to common stockholders was $15.0 billion in 2023.",
+      "verdict": "valid"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "case_id": "nvidia_fy2024",
+  "company": "NVIDIA Corporation",
+  "labels": [
+    {
+      "quote": "NVIDIA's revenue grew 126% from $27.0 billion in fiscal 2023 to $60.9 billion in fiscal 2024.",
+      "verdict": "valid"
+    },
+    {
+      "quote": "Gross margin was 72.7% in fiscal 2024, on gross profit of $44.3 billion and revenue of $60.9 billion.",
+      "verdict": "valid"
+    },
+    {
+      "quote": "Data Center revenue was $47.5 billion in fiscal 2024.",
+      "verdict": "valid"
+    },
+    {
+      "quote": "Net income rose to $29.8 million in fiscal 2024.",
+      "verdict": "invalid",
+      "error_type": "unit_error",
+      "correction_contains": "29,760"
+    },
+    {
+      "quote": "Operating income was $32.0 billion in fiscal 2024.",
+      "verdict": "invalid",
+      "error_type": "misstated_figure",
+      "correction_contains": "$33.0 billion"
+    }
+  ]
+}

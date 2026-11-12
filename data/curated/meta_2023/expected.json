@@ -1,0 +1,30 @@
+{
+  "case_id": "meta_2023",
+  "company": "Meta Platforms, Inc.",
+  "labels": [
+    {
+      "quote": "Meta's revenue grew 15.7% from $116.6 billion in 2022 to $134.9 billion in 2023.",
+      "verdict": "valid"
+    },
+    {
+      "quote": "Costs and expenses totaled $88.2 billion in 2023.",
+      "verdict": "valid"
+    },
+    {
+      "quote": "Income from operations was $46.8 billion in 2023, a margin of 34.7% on revenue of $134.9 billion.",
+      "verdict": "valid"
+    },
+    {
+      "quote": "Net income was $23.2 billion in 2023.",
+      "verdict": "invalid",
+      "error_type": "wrong_period",
+      "correction_contains": "$39.1 billion"
+    },
+    {
+      "quote": "Revenue was $143.9 billion in 2023.",
+      "verdict": "invalid",
+      "error_type": "misstated_figure",
+      "correction_contains": "$134.9 billion"
+    }
+  ]
+}
