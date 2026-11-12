@@ -1,0 +1,17 @@
+# LoRA SFT of the claim judge. ~1.6k examples x 2 epochs takes well under an hour on one H100.
+stage: sft
+base_model: Qwen/Qwen2.5-7B-Instruct
+seed: 0
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules: all-linear
+epochs: 2
+learning_rate: 1.0e-4
+batch_size: 4
+grad_accum: 4
+max_length: 2048
+warmup_ratio: 0.03
+eval_samples: 300
+wandb_project: auditrl

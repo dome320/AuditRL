@@ -1,0 +1,20 @@
+# GRPO on top of an SFT adapter, rewarded by auditrl.training.rewards (Phase 1 verifiers).
+# Only launched if `auditrl train rl-gate` passed, or with --force-rl.
+stage: grpo
+base_model: Qwen/Qwen2.5-7B-Instruct
+init_adapter: REPLACE_WITH_SFT_RUN_NAME   # e.g. sft-judge-v1-20261112-153000
+seed: 0
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules: all-linear
+learning_rate: 5.0e-6
+grad_accum: 4
+max_steps: 300
+num_generations: 8
+max_completion_length: 384
+temperature: 0.9
+beta: 0.0
+eval_samples: 300
+wandb_project: auditrl

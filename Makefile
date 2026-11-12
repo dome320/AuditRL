@@ -1,5 +1,6 @@
 .PHONY: install dev backend frontend test lint audit eval-p1 \
-	bench-fetch bench-generate bench-freeze bench-eval bench-compare
+	bench-fetch bench-generate bench-freeze bench-eval bench-compare \
+	train-data train-sft train-grpo serve-judge
 
 install:
 	cd backend && uv sync
@@ -42,3 +43,16 @@ bench-eval:
 
 bench-compare:
 	cd backend && uv run auditrl bench compare
+
+# Phase 3 judge training (see README "Judge training")
+train-data:
+	cd backend && uv run auditrl train build-data
+
+train-sft:
+	cd backend && uv run --extra cloud modal run auditrl/training/modal_app.py --stage sft --config ../data/training/configs/sft.yaml
+
+train-grpo:
+	cd backend && uv run --extra cloud modal run auditrl/training/modal_app.py --stage grpo --config ../data/training/configs/grpo.yaml
+
+serve-judge:
+	cd backend && uv run --extra cloud modal deploy auditrl/training/modal_app.py
