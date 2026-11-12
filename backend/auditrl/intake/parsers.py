@@ -46,7 +46,7 @@ class _Builder:
         self.pos = 0
         self.passages: list[ParsedPassage] = []
         self.table_count = 0
-        self.recent_text = ""
+        self.last_paragraph = ""
 
     def add_paragraph(self, text: str, page: int | None = None) -> None:
         text = text.strip()
@@ -54,7 +54,7 @@ class _Builder:
             return
         start = self._append(text)
         self.passages.append(ParsedPassage(start, start + len(text), text, page=page))
-        self.recent_text = (self.recent_text + " " + text)[-400:]
+        self.last_paragraph = text
 
     def add_table(
         self,
@@ -71,7 +71,7 @@ class _Builder:
         scale = (
             detect_scale(" ".join(header_row))
             or detect_scale(caption or "")
-            or detect_scale(self.recent_text)
+            or detect_scale(self.last_paragraph)
             or 1.0
         )
         table_id = self.table_count
@@ -144,7 +144,7 @@ def _parse_markdown(raw: str, b: _Builder) -> None:
             and _MD_TABLE_SEP.match(lines[i + 1])
         ):
             flush()
-            caption = b.recent_text[-200:].strip()
+            caption = b.last_paragraph
             rows = [_split_md_row(line)]
             i += 2
             while i < len(lines) and lines[i].strip().startswith("|"):
