@@ -1,8 +1,8 @@
-"""Phase 1 smoke evaluation against the curated dataset (`data/curated/<case>/`).
+"""Claim-level scoring shared by the curated smoke set and the Phase 2 benchmark.
 
 Each case directory holds `report.md`, `sources/`, and `expected.json` with claim-level labels.
-Every injected error is labeled, so an `invalid` finding with no matching label counts as a
-false positive.
+An `invalid` finding matching no label counts as a false positive, unless it falls in a
+sentence listed under `expected["unlabeled"]` (the labeler abstained there).
 """
 
 import json
@@ -48,43 +48,61 @@ def run_case(case_dir: Path, llm: LLMClient, settings: Settings) -> dict[str, An
             settings=settings,
         )
     run = run_audit(run.id, llm=llm, engine=engine, settings=settings)
+    if run.status != "completed":
+        raise RuntimeError(f"audit of {case_dir.name} failed: {run.error}")
     with Session(engine) as session:
         export = build_export(session, run.id)
     return export
 
 
 def score_case(export: dict[str, Any], expected: dict[str, Any]) -> dict[str, Any]:
+    """Score one audit against labels.
+
+    The auditor may split a labeled sentence into several claims, so a label takes the most
+    severe verdict among all findings inside it. Invalid findings that fall only in sentences
+    the labeler could not label (`expected["unlabeled"]`) are reported as unscored rather
+    than counted as false positives.
+    """
     findings = export["findings"]
     labels = expected["labels"]
+    unlabeled_quotes = expected.get("unlabeled", [])
     rows = []
     matched_findings: set[int] = set()
+    severity = {"invalid": 0, "uncertain": 1, "valid": 2}
     for label in labels:
-        f = next((f for f in findings if _matches(label["quote"], f["claim_text"])), None)
-        if f:
-            matched_findings.add(f["finding_id"])
-        predicted = f["verdict"] if f else "missing"
+        hits = [f for f in findings if _matches(label["quote"], f["claim_text"])]
+        matched_findings.update(f["finding_id"] for f in hits)
+        f = min(hits, key=lambda h: severity[h["verdict"]]) if hits else None
+        invalid_hits = [h for h in hits if h["verdict"] == "invalid"]
         row = {
             "quote": label["quote"],
             "expected": label["verdict"],
             "expected_error_type": label.get("error_type"),
-            "predicted": predicted,
+            "predicted": f["verdict"] if f else "missing",
             "predicted_error_type": f["error_type"] if f else None,
+            "predicted_error_types": [h["error_type"] for h in invalid_hits],
             "correction": f["correction"] if f else None,
             "has_evidence": bool(f and f["evidence"]),
         }
         if label.get("correction_contains"):
-            row["correction_ok"] = bool(
-                f and f["correction"] and label["correction_contains"] in f["correction"]
+            row["correction_ok"] = any(
+                h["correction"] and label["correction_contains"] in h["correction"]
+                for h in invalid_hits
             )
         rows.append(row)
-    unlabeled_invalid = [
-        f["claim_text"]
-        for f in findings
-        if f["verdict"] == "invalid" and f["finding_id"] not in matched_findings
-    ]
+    unlabeled_invalid, unscored_invalid = [], []
+    for f in findings:
+        if f["verdict"] != "invalid" or f["finding_id"] in matched_findings:
+            continue
+        if any(_matches(q, f["claim_text"]) for q in unlabeled_quotes):
+            unscored_invalid.append(f["claim_text"])
+        else:
+            unlabeled_invalid.append(f["claim_text"])
     return {
         "rows": rows,
         "unlabeled_invalid": unlabeled_invalid,
+        "unscored_invalid": unscored_invalid,
+        "coverage": expected.get("coverage"),
         "latency_s": export["audit"].get("latency_s"),
         "cost_usd": export["audit"].get("cost_usd") or 0.0,
     }
@@ -113,7 +131,7 @@ def aggregate(cases: dict[str, dict[str, Any]]) -> dict[str, Any]:
         "recall": recall,
         "f1": 2 * precision * recall / (precision + recall) if precision + recall else 0.0,
         "error_type_accuracy": (
-            sum(1 for r in tps if r["predicted_error_type"] == r["expected_error_type"]) / len(tps)
+            sum(1 for r in tps if r["expected_error_type"] in r["predicted_error_types"]) / len(tps)
             if tps
             else 0.0
         ),
@@ -134,26 +152,38 @@ def aggregate(cases: dict[str, dict[str, Any]]) -> dict[str, Any]:
             else 0.0
         ),
         "evidence_support": (sum(1 for r in tps if r["has_evidence"]) / len(tps) if tps else 0.0),
+        "unscored_invalid": sum(len(c.get("unscored_invalid", [])) for c in cases.values()),
         "mean_latency_s": sum(c["latency_s"] or 0 for c in cases.values()) / n_cases,
+        "mean_cost_usd": sum(c["cost_usd"] for c in cases.values()) / n_cases,
         "total_cost_usd": sum(c["cost_usd"] for c in cases.values()),
+    }
+
+
+def evaluate_cases(
+    case_dirs: list[Path],
+    model: str | None = None,
+    llm: LLMClient | None = None,
+    settings: Settings | None = None,
+) -> dict[str, Any]:
+    settings = settings or get_settings()
+    client = llm or get_client(model, settings)
+    cases: dict[str, dict[str, Any]] = {}
+    for case_dir in case_dirs:
+        expected = json.loads((case_dir / "expected.json").read_text())
+        export = run_case(case_dir, client, settings)
+        cases[case_dir.name] = score_case(export, expected)
+    return {
+        "model": model or client.name,
+        "summary": aggregate(cases),
+        "cases": cases,
     }
 
 
 def evaluate_dataset(
     dataset: Path, model: str | None = None, llm: LLMClient | None = None
 ) -> dict[str, Any]:
-    settings = get_settings()
-    cases: dict[str, dict[str, Any]] = {}
-    for case_dir in sorted(p for p in dataset.iterdir() if (p / "expected.json").exists()):
-        client = llm or get_client(model, settings)
-        expected = json.loads((case_dir / "expected.json").read_text())
-        export = run_case(case_dir, client, settings)
-        cases[case_dir.name] = score_case(export, expected)
-    return {
-        "model": model or (llm.name if llm else settings.model),
-        "summary": aggregate(cases),
-        "cases": cases,
-    }
+    case_dirs = sorted(p for p in dataset.iterdir() if (p / "expected.json").exists())
+    return evaluate_cases(case_dirs, model=model, llm=llm)
 
 
 def format_summary(result: dict[str, Any]) -> str:
@@ -170,7 +200,8 @@ def format_summary(result: dict[str, Any]) -> str:
         f"Valid-claim accuracy {s['valid_claim_accuracy']:.2f}   "
         f"false-positive rate {s['false_positive_rate']:.2f}   "
         f"uncertain/missing {s['uncertain_or_missing_rate']:.2f}",
-        f"Mean latency {s['mean_latency_s']:.2f}s   total cost ${s['total_cost_usd']:.4f}",
+        f"Mean latency {s['mean_latency_s']:.2f}s   total cost ${s['total_cost_usd']:.4f}"
+        + (f"   unscored invalid {s['unscored_invalid']}" if s.get("unscored_invalid") else ""),
         "",
     ]
     for name, case in result["cases"].items():
