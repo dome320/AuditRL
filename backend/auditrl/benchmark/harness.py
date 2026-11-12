@@ -14,6 +14,7 @@ from auditrl.benchmark.labeler import LABELER_VERSION
 from auditrl.benchmark.splits import cases_in_split, manifest_hash
 from auditrl.config import Settings, get_settings
 from auditrl.evaluation import evaluate_cases
+from auditrl.judge.format import JUDGE_PROMPT_VERSION
 from auditrl.llm import LLMClient
 from auditrl.llm.prompts import PROMPT_VERSION
 
@@ -68,6 +69,9 @@ def run_eval(
         "split": split,
         "cases": len(selected),
         "auditor_prompt_version": PROMPT_VERSION,
+        "judge_model": settings.judge_model or None,
+        "judge_api_base": settings.judge_api_base or None,
+        "judge_prompt_version": JUDGE_PROMPT_VERSION if settings.judge_model else None,
         "config_hash": settings.config_hash(),
         "labeler_version": LABELER_VERSION,
         "manifest_hash": manifest_hash(bench),
@@ -122,7 +126,8 @@ def compare(runs: list[dict[str, Any]]) -> str:
 
 
 def load_baselines(path: Path) -> list[dict[str, Any]]:
-    """`baselines.yaml`: a list of {name, model, [temperature]} entries."""
+    """`baselines.yaml`: a list of {name, model, ...} entries; other keys are Settings
+    overrides such as temperature, judge_model, judge_api_base."""
     data = yaml.safe_load(path.read_text()) or {}
     return list(data.get("baselines", []))
 
@@ -134,9 +139,11 @@ def run_baselines(
     records = []
     base = get_settings()
     for entry in load_baselines(config):
-        update = {"model": entry["model"]}
-        if "temperature" in entry:
-            update["temperature"] = entry["temperature"]
+        update = {k: v for k, v in entry.items() if k != "name"}
+        unknown = set(update) - set(type(base).model_fields)
+        if unknown:
+            records.append({"name": entry["name"], "error": f"unknown keys {sorted(unknown)}"})
+            continue
         settings = base.model_copy(update=update)
         try:
             record, _ = run_eval(

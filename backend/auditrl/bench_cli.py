@@ -127,13 +127,26 @@ def eval_cmd(
     split: Annotated[str, typer.Option(help="train | dev | test | all")] = "test",
     limit: Annotated[int | None, typer.Option()] = None,
     name: Annotated[str | None, typer.Option(help="Run name (default: model)")] = None,
+    judge_model: Annotated[
+        str | None, typer.Option(help="Judge model; rules on claims instead of the verifiers")
+    ] = None,
+    judge_api_base: Annotated[
+        str | None, typer.Option(help="Judge endpoint (Modal URL)/v1")
+    ] = None,
     bench: BenchOpt = None,
 ) -> None:
     """Evaluate the auditor on a split and save a run record under runs/."""
     from auditrl.benchmark.harness import run_eval
     from auditrl.evaluation import format_summary
 
-    record, path = run_eval(_bench(bench), model=model, split=split, limit=limit, name=name)
+    settings = get_settings()
+    if judge_model:
+        settings = settings.model_copy(
+            update={"judge_model": judge_model, "judge_api_base": judge_api_base or ""}
+        )
+    record, path = run_eval(
+        _bench(bench), model=model, split=split, limit=limit, name=name, settings=settings
+    )
     typer.echo(
         format_summary(
             {"model": record["model"], "summary": record["summary"], "cases": record["per_case"]}

@@ -9,3 +9,18 @@ baselines:
   - name: small
     model: ollama/llama3.1:8b
     temperature: 0
+
+# Phase 3 judge variants (T03). Claims are extracted by `model`; the judge rules on them.
+# Fill in the Modal URL after `modal deploy` and the run names after training, then uncomment.
+#  - name: judge-untuned
+#    model: anthropic/claude-sonnet-4-5
+#    judge_model: openai/Qwen/Qwen2.5-7B-Instruct
+#    judge_api_base: https://<workspace>--auditrl-judge-serve.modal.run/v1
+#  - name: judge-sft
+#    model: anthropic/claude-sonnet-4-5
+#    judge_model: openai/judge-<sft run name>
+#    judge_api_base: https://<workspace>--auditrl-judge-serve.modal.run/v1
+#  - name: judge-grpo
+#    model: anthropic/claude-sonnet-4-5
+#    judge_model: openai/judge-<grpo run name>
+#    judge_api_base: https://<workspace>--auditrl-judge-serve.modal.run/v1
