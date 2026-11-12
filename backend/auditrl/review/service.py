@@ -80,6 +80,7 @@ def _log_feedback(session: Session, finding: Finding, review: Review, path: Path
             "evidence_passage_ids": finding.evidence_passage_ids,
             "evidence_quotes": finding.evidence_quotes,
             "rationale": finding.rationale,
+            "verifier": finding.verifier,
         },
         "review": review.model_dump(mode="json"),
     }

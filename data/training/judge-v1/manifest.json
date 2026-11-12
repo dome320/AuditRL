@@ -1,0 +1,110 @@
+{
+ "name": "judge-v1",
+ "created_at": "2026-11-12T15:41:46.286492+00:00",
+ "judge_prompt_version": "judge-v1",
+ "config": {
+  "name": "judge-v1",
+  "seed": 0,
+  "per_task": 40,
+  "top_k": 8,
+  "include_silver": true,
+  "include_feedback": true
+ },
+ "bench_manifest_hash": null,
+ "tickers": {
+  "train": [
+   "ABBV",
+   "CAT",
+   "CL",
+   "CSCO",
+   "CVX",
+   "HON",
+   "IBM",
+   "INTC",
+   "JNJ",
+   "LOW",
+   "MCD",
+   "MRK",
+   "NFLX",
+   "NKE",
+   "SBUX",
+   "T",
+   "TGT",
+   "TXN",
+   "UNH",
+   "VZ"
+  ],
+  "val": [
+   "AAPL",
+   "AMZN",
+   "COST",
+   "CRM",
+   "DIS",
+   "GE",
+   "GOOGL",
+   "LLY",
+   "META",
+   "MSFT",
+   "NVDA",
+   "PG",
+   "QCOM",
+   "TMO",
+   "UPS"
+  ],
+  "excluded_test": [
+   "ADBE",
+   "AMD",
+   "DE",
+   "HD",
+   "KO",
+   "ORCL",
+   "PEP",
+   "PFE",
+   "WMT"
+  ]
+ },
+ "feedback_dropped_test_overlap": 0,
+ "counts": {
+  "train": {
+   "total": 1600,
+   "source": {
+    "synthetic": 1600
+   },
+   "verdict": {
+    "valid": 695,
+    "invalid": 670,
+    "uncertain": 235
+   },
+   "error_type": {
+    "wrong_period": 113,
+    "misstated_figure": 209,
+    "arithmetic_error": 183,
+    "citation_mismatch": 71,
+    "unit_error": 94
+   }
+  },
+  "val": {
+   "total": 1200,
+   "source": {
+    "synthetic": 1200
+   },
+   "verdict": {
+    "invalid": 524,
+    "valid": 497,
+    "uncertain": 179
+   },
+   "error_type": {
+    "wrong_period": 88,
+    "citation_mismatch": 67,
+    "unit_error": 65,
+    "arithmetic_error": 178,
+    "misstated_figure": 126
+   }
+  }
+ },
+ "files": {
+  "train.jsonl": "9e2bae4807476b3cdff94d4ecfefec892ac3154c1f3098ae3cf3fc3f7e011803",
+  "val.jsonl": "32445c01b17b958d2405e8512050699848a9e55d1a1bd528e71566da2c2b2ce3"
+ },
+ "dataset_hash": "160081756a8c19dd"
+}

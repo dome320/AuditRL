@@ -8,4 +8,7 @@ node_modules/
 frontend/dist/
 backend/var/
 *.db
+# Judge datasets rebuild deterministically (`auditrl train build-data`); manifests are kept.
+data/training/*/*.jsonl
+data/training/rl_gate.json
 .DS_Store

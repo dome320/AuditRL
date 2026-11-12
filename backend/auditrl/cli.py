@@ -11,9 +11,11 @@ from auditrl.export import build_export, to_json, to_jsonl, to_markdown
 from auditrl.intake import parse_path
 from auditrl.models import get_engine, init_db
 from auditrl.pipeline import create_audit, run_audit
+from auditrl.train_cli import train_app
 
 app = typer.Typer(no_args_is_help=True, help="AuditRL command-line tools")
 app.add_typer(bench_app, name="bench")
+app.add_typer(train_app, name="train")
 
 SOURCE_SUFFIXES = {".md", ".markdown", ".txt", ".pdf", ".html", ".htm", ".csv", ".xlsx", ".xlsm"}
 
