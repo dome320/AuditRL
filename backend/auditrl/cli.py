@@ -5,6 +5,7 @@ from typing import Annotated
 import typer
 from sqlmodel import Session
 
+from auditrl.bench_cli import bench_app
 from auditrl.config import get_settings
 from auditrl.export import build_export, to_json, to_jsonl, to_markdown
 from auditrl.intake import parse_path
@@ -12,6 +13,7 @@ from auditrl.models import get_engine, init_db
 from auditrl.pipeline import create_audit, run_audit
 
 app = typer.Typer(no_args_is_help=True, help="AuditRL command-line tools")
+app.add_typer(bench_app, name="bench")
 
 SOURCE_SUFFIXES = {".md", ".markdown", ".txt", ".pdf", ".html", ".htm", ".csv", ".xlsx", ".xlsm"}
 
@@ -73,6 +75,20 @@ def eval_p1(
     typer.echo(format_summary(result))
     if out:
         out.write_text(json.dumps(result, indent=2, default=str))
+
+
+@app.command()
+def feedback(
+    out: Annotated[Path, typer.Option(help="Output JSONL of candidate examples")] = Path(
+        "var/feedback_examples.jsonl"
+    ),
+    log: Annotated[Path | None, typer.Option(help="Default: DATA_DIR/feedback.jsonl")] = None,
+) -> None:
+    """Export reviewer decisions as candidate training/eval examples."""
+    from auditrl.review.feedback import export_feedback
+
+    counts = export_feedback(log or get_settings().data_dir / "feedback.jsonl", out)
+    typer.echo(f"{json.dumps(counts)} -> {out}")
 
 
 @app.command()

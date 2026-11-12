@@ -1,0 +1,11 @@
+# Auditor baselines for `auditrl bench baselines` (spec section 06: strong + small model).
+# Any LiteLLM model string works; set the matching provider key in .env.
+baselines:
+  - name: heuristic
+    model: heuristic
+  - name: strong
+    model: anthropic/claude-sonnet-4-5
+    temperature: 0
+  - name: small
+    model: ollama/llama3.1:8b
+    temperature: 0

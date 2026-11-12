@@ -24,6 +24,12 @@ class Settings(BaseSettings):
     llm_rationale: bool = True
     reviewer: str = "anonymous"
 
+    # Phase 2 benchmark
+    bench_dir: Path = Path(__file__).resolve().parents[2] / "data" / "benchmark"
+    sec_user_agent: str = ""  # SEC requires "Name email@domain" for EDGAR API access
+    agent_model: str = "anthropic/claude-sonnet-4-5"
+    agent_temperature: float = 0.7
+
     @property
     def database_url(self) -> str:
         if self.db_url:

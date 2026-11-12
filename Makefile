@@ -1,4 +1,5 @@
-.PHONY: install dev backend frontend test lint audit eval-p1
+.PHONY: install dev backend frontend test lint audit eval-p1 \
+	bench-fetch bench-generate bench-freeze bench-eval bench-compare
 
 install:
 	cd backend && uv sync
@@ -25,3 +26,19 @@ audit:
 
 eval-p1:
 	cd backend && uv run auditrl eval-p1 ../data/curated
+
+# Phase 2 benchmark (see README "Benchmark"). MODEL / SPLIT are optional.
+bench-fetch:
+	cd backend && uv run auditrl bench fetch
+
+bench-generate:
+	cd backend && uv run auditrl bench generate $(if $(MODEL),--model $(MODEL))
+
+bench-freeze:
+	cd backend && uv run auditrl bench freeze
+
+bench-eval:
+	cd backend && uv run auditrl bench eval $(if $(MODEL),--model $(MODEL)) --split $(or $(SPLIT),test)
+
+bench-compare:
+	cd backend && uv run auditrl bench compare
