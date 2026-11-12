@@ -7,8 +7,9 @@ evidence-backed findings with suggested corrections. Reviewer decisions are logg
 training and evaluation signal for later phases.
 
 **Status:** Phase 1 (audit-only MVP) is done. Phase 2 (benchmark tooling and real SEC data)
-is built; generating the agent reports needs a provider API key. Phases 3-4 (post-training,
-research release) are planned.
+is built; generating the agent reports needs a provider API key. Phase 3 (judge model
+post-training) is built and ready to run on Modal; no model has been trained yet. Phase 4
+(research release) is planned.
 
 ## How it works
 
@@ -118,6 +119,66 @@ targets. Edits become targets, with the model's original output kept as the reje
 alternative. Rejections are recorded as rejected outputs only. Everything is marked
 `candidate` until it is promoted for training.
 
+## Judge training (Phase 3)
+
+Phase 3 fine-tunes a small open model (Qwen2.5-7B-Instruct with LoRA by default) as a
+*judge*. The judge receives one claim plus the passages the auditor retrieved for it,
+labeled E1 to Ek. It returns a JSON object with a verdict, error type, the evidence ids it
+used, a correction, and a rationale. Setting `AUDITRL_JUDGE_MODEL` makes the auditor use the
+judge instead of the deterministic verifiers. A deterministic grounding check still runs on
+the judge's answer: an `invalid` verdict that cites no evidence is downgraded to
+`uncertain`, and so is a correction whose figures don't appear in the cited evidence or
+follow from it as a ratio or growth rate.
+
+- **Data.** `auditrl train build-data` writes `data/training/judge-v1/{train,val}.jsonl` and
+  a `manifest.json` with counts and a dataset hash.
+  - Most examples are synthetic. Each one states a real figure from a train-split company's
+    SEC filings, either correctly or with one injected error: a misstated figure, the wrong
+    fiscal year, a units slip, wrong margin or growth arithmetic, or a citation to the wrong
+    filing. Some state figures the filings don't contain. Labels are exact by construction.
+    The evidence comes from the same retrieval the live auditor uses, and when retrieval
+    misses the rows needed to decide, the label is `uncertain`.
+  - Silver-labeled agent reports and accepted or edited reviewer feedback are added
+    automatically once they exist.
+  - Train data comes only from train-split companies and validation data only from
+    dev-split companies. Test-split companies are never read. Feedback whose claim appears
+    in a test-split report is dropped.
+  - The current build has 1,600 train and 1,200 validation examples from 35 companies.
+- **Rewards.** `auditrl/training/rewards.py` is built on the Phase 1 normalizer and the
+  grounding check.
+  - A correct verdict earns +1.0, with bonuses for the right error type, a correct fix, and
+    citing the right evidence.
+  - A false accusation costs -1.5, and a correction whose figures the evidence doesn't
+    support costs -0.5.
+  - Justified abstention earns +0.5, while abstaining when the evidence was enough costs
+    -0.25.
+- **SFT.** Supervised fine-tuning uses TRL and PEFT on a Modal GPU and is tracked in
+  Weights & Biases. Each run logs the config, dataset hash, benchmark manifest hash, git
+  commit, validation metrics, and the adapter as an artifact.
+- **RL.** GRPO continues from the SFT adapter using the rewards above. It only launches
+  if `auditrl train rl-gate` passes, meaning at least 50 reviewed findings with 90% or
+  higher agreement between the verifiers and reviewers; otherwise pass `--force-rl`.
+- **Comparison (T03).** `modal deploy` serves the base model and every adapter through an
+  OpenAI-compatible vLLM endpoint. `auditrl train eval-judge` scores a judge on the
+  validation split, and `bench eval --judge-model ...` scores it on the frozen benchmark
+  test split.
+
+```bash
+cd backend
+uv sync --extra cloud && uv run modal setup          # once; then create the wandb secret:
+uv run modal secret create wandb WANDB_API_KEY=...
+uv run auditrl train build-data
+uv run modal run auditrl/training/modal_app.py --stage sft --config ../data/training/configs/sft.yaml
+uv run auditrl train rl-gate                          # GRPO needs this to pass (or --force-rl)
+uv run modal run auditrl/training/modal_app.py --stage grpo --config ../data/training/configs/grpo.yaml
+uv run modal deploy auditrl/training/modal_app.py     # prints the serve URL
+URL=https://<workspace>--auditrl-judge-serve.modal.run/v1
+uv run auditrl train eval-judge --model openai/Qwen/Qwen2.5-7B-Instruct --api-base $URL --name untuned
+uv run auditrl train eval-judge --model openai/judge-<sft run> --api-base $URL --name sft
+uv run auditrl train compare-judges
+uv run auditrl bench eval --split test --judge-model openai/judge-<sft run> --judge-api-base $URL
+```
+
 ## Layout
 
 ```
@@ -129,9 +190,12 @@ backend/auditrl/
   export/       md/html/json/jsonl                api/         FastAPI app
   pipeline.py   orchestration                     evaluation.py  claim-level scoring
   benchmark/    EDGAR client, research agent, labeler, dataset, splits, harness
+  judge/        judge prompt/format, client, retrieval, grounding guard
+  training/     training data, rewards, RL gate, TRL trainer, Modal app
 frontend/       React + Vite review UI
 data/curated/   10 smoke-test cases (see its README for limitations)
 data/benchmark/ universe, tasks, rendered SEC sources, cases, splits.json, runs/
+data/training/  training configs, dataset manifests, judge evals, training run records
 ```
 
 ## Roadmap
@@ -139,6 +203,7 @@ data/benchmark/ universe, tasks, rendered SEC sources, cases, splits.json, runs/
 - **Phase 2 (remaining):** generate agent reports once an API key is configured, freeze
   the splits, and run the strong and small baselines. Human labels on a sample would
   measure how accurate the silver labels are.
-- **Phase 3:** LoRA SFT of a 1-8B model on validated examples; optional RL using the Phase 1
-  verifiers as rewards, if they agree well enough with human labels.
+- **Phase 3 (remaining):** run SFT on Modal; compare the untuned and SFT judges on
+  validation and on the benchmark test split; collect reviews until the RL gate can be
+  measured, then decide whether to run GRPO.
 - **Phase 4:** demo, reproducible experiments, adapters, and a technical report.
