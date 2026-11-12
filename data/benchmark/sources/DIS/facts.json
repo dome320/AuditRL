@@ -1,0 +1,653 @@
+[
+ {
+  "accession": "0001744489-23-000216",
+  "fiscal_year": 2023,
+  "filed": "2023-11-21",
+  "period_end": "2023-09-30",
+  "facts": [
+   {
+    "metric": "revenue",
+    "concept": "Revenues",
+    "fiscal_year": 2021,
+    "value": 67418000000.0,
+    "unit": "USD",
+    "start": "2020-10-04",
+    "end": "2021-10-02",
+    "accession": "0001744489-23-000216",
+    "filed": "2023-11-21"
+   },
+   {
+    "metric": "revenue",
+    "concept": "Revenues",
+    "fiscal_year": 2022,
+    "value": 82722000000.0,
+    "unit": "USD",
+    "start": "2021-10-03",
+    "end": "2022-10-01",
+    "accession": "0001744489-23-000216",
+    "filed": "2023-11-21"
+   },
+   {
+    "metric": "revenue",
+    "concept": "Revenues",
+    "fiscal_year": 2023,
+    "value": 88898000000.0,
+    "unit": "USD",
+    "start": "2022-10-02",
+    "end": "2023-09-30",
+    "accession": "0001744489-23-000216",
+    "filed": "2023-11-21"
+   },
+   {
+    "metric": "sga",
+    "concept": "SellingGeneralAndAdministrativeExpense",
+    "fiscal_year": 2021,
+    "value": 13517000000.0,
+    "unit": "USD",
+    "start": "2020-10-04",
+    "end": "2021-10-02",
+    "accession": "0001744489-23-000216",
+    "filed": "2023-11-21"
+   },
+   {
+    "metric": "sga",
+    "concept": "SellingGeneralAndAdministrativeExpense",
+    "fiscal_year": 2022,
+    "value": 16388000000.0,
+    "unit": "USD",
+    "start": "2021-10-03",
+    "end": "2022-10-01",
+    "accession": "0001744489-23-000216",
+    "filed": "2023-11-21"
+   },
+   {
+    "metric": "sga",
+    "concept": "SellingGeneralAndAdministrativeExpense",
+    "fiscal_year": 2023,
+    "value": 15336000000.0,
+    "unit": "USD",
+    "start": "2022-10-02",
+    "end": "2023-09-30",
+    "accession": "0001744489-23-000216",
+    "filed": "2023-11-21"
+   },
+   {
+    "metric": "operating_income",
+    "concept": "OperatingIncomeLoss",
+    "fiscal_year": 2021,
+    "value": 7766000000.0,
+    "unit": "USD",
+    "start": "2020-10-04",
+    "end": "2021-10-02",
+    "accession": "0001744489-23-000216",
+    "filed": "2023-11-21"
+   },
+   {
+    "metric": "operating_income",
+    "concept": "OperatingIncomeLoss",
+    "fiscal_year": 2022,
+    "value": 12121000000.0,
+    "unit": "USD",
+    "start": "2021-10-03",
+    "end": "2022-10-01",
+    "accession": "0001744489-23-000216",
+    "filed": "2023-11-21"
+   },
+   {
+    "metric": "operating_income",
+    "concept": "OperatingIncomeLoss",
+    "fiscal_year": 2023,
+    "value": 12863000000.0,
+    "unit": "USD",
+    "start": "2022-10-02",
+    "end": "2023-09-30",
+    "accession": "0001744489-23-000216",
+    "filed": "2023-11-21"
+   },
+   {
+    "metric": "net_income",
+    "concept": "NetIncomeLoss",
+    "fiscal_year": 2021,
+    "value": 1995000000.0,
+    "unit": "USD",
+    "start": "2020-10-04",
+    "end": "2021-10-02",
+    "accession": "0001744489-23-000216",
+    "filed": "2023-11-21"
+   },
+   {
+    "metric": "net_income",
+    "concept": "NetIncomeLoss",
+    "fiscal_year": 2022,
+    "value": 3145000000.0,
+    "unit": "USD",
+    "start": "2021-10-03",
+    "end": "2022-10-01",
+    "accession": "0001744489-23-000216",
+    "filed": "2023-11-21"
+   },
+   {
+    "metric": "net_income",
+    "concept": "NetIncomeLoss",
+    "fiscal_year": 2023,
+    "value": 2354000000.0,
+    "unit": "USD",
+    "start": "2022-10-02",
+    "end": "2023-09-30",
+    "accession": "0001744489-23-000216",
+    "filed": "2023-11-21"
+   },
+   {
+    "metric": "eps_diluted",
+    "concept": "EarningsPerShareDiluted",
+    "fiscal_year": 2021,
+    "value": 1.09,
+    "unit": "USD/shares",
+    "start": "2020-10-04",
+    "end": "2021-10-02",
+    "accession": "0001744489-23-000216",
+    "filed": "2023-11-21"
+   },
+   {
+    "metric": "eps_diluted",
+    "concept": "EarningsPerShareDiluted",
+    "fiscal_year": 2022,
+    "value": 1.72,
+    "unit": "USD/shares",
+    "start": "2021-10-03",
+    "end": "2022-10-01",
+    "accession": "0001744489-23-000216",
+    "filed": "2023-11-21"
+   },
+   {
+    "metric": "eps_diluted",
+    "concept": "EarningsPerShareDiluted",
+    "fiscal_year": 2023,
+    "value": 1.29,
+    "unit": "USD/shares",
+    "start": "2022-10-02",
+    "end": "2023-09-30",
+    "accession": "0001744489-23-000216",
+    "filed": "2023-11-21"
+   },
+   {
+    "metric": "capex",
+    "concept": "PaymentsToAcquirePropertyPlantAndEquipment",
+    "fiscal_year": 2021,
+    "value": 3578000000.0,
+    "unit": "USD",
+    "start": "2020-10-04",
+    "end": "2021-10-02",
+    "accession": "0001744489-23-000216",
+    "filed": "2023-11-21"
+   },
+   {
+    "metric": "capex",
+    "concept": "PaymentsToAcquirePropertyPlantAndEquipment",
+    "fiscal_year": 2022,
+    "value": 4943000000.0,
+    "unit": "USD",
+    "start": "2021-10-03",
+    "end": "2022-10-01",
+    "accession": "0001744489-23-000216",
+    "filed": "2023-11-21"
+   },
+   {
+    "metric": "capex",
+    "concept": "PaymentsToAcquirePropertyPlantAndEquipment",
+    "fiscal_year": 2023,
+    "value": 4969000000.0,
+    "unit": "USD",
+    "start": "2022-10-02",
+    "end": "2023-09-30",
+    "accession": "0001744489-23-000216",
+    "filed": "2023-11-21"
+   }
+  ]
+ },
+ {
+  "accession": "0001744489-24-000276",
+  "fiscal_year": 2024,
+  "filed": "2024-11-14",
+  "period_end": "2024-09-28",
+  "facts": [
+   {
+    "metric": "revenue",
+    "concept": "Revenues",
+    "fiscal_year": 2022,
+    "value": 82722000000.0,
+    "unit": "USD",
+    "start": "2021-10-03",
+    "end": "2022-10-01",
+    "accession": "0001744489-24-000276",
+    "filed": "2024-11-14"
+   },
+   {
+    "metric": "revenue",
+    "concept": "Revenues",
+    "fiscal_year": 2023,
+    "value": 88898000000.0,
+    "unit": "USD",
+    "start": "2022-10-02",
+    "end": "2023-09-30",
+    "accession": "0001744489-24-000276",
+    "filed": "2024-11-14"
+   },
+   {
+    "metric": "revenue",
+    "concept": "Revenues",
+    "fiscal_year": 2024,
+    "value": 91361000000.0,
+    "unit": "USD",
+    "start": "2023-10-01",
+    "end": "2024-09-28",
+    "accession": "0001744489-24-000276",
+    "filed": "2024-11-14"
+   },
+   {
+    "metric": "sga",
+    "concept": "SellingGeneralAndAdministrativeExpense",
+    "fiscal_year": 2022,
+    "value": 16388000000.0,
+    "unit": "USD",
+    "start": "2021-10-03",
+    "end": "2022-10-01",
+    "accession": "0001744489-24-000276",
+    "filed": "2024-11-14"
+   },
+   {
+    "metric": "sga",
+    "concept": "SellingGeneralAndAdministrativeExpense",
+    "fiscal_year": 2023,
+    "value": 15336000000.0,
+    "unit": "USD",
+    "start": "2022-10-02",
+    "end": "2023-09-30",
+    "accession": "0001744489-24-000276",
+    "filed": "2024-11-14"
+   },
+   {
+    "metric": "sga",
+    "concept": "SellingGeneralAndAdministrativeExpense",
+    "fiscal_year": 2024,
+    "value": 15759000000.0,
+    "unit": "USD",
+    "start": "2023-10-01",
+    "end": "2024-09-28",
+    "accession": "0001744489-24-000276",
+    "filed": "2024-11-14"
+   },
+   {
+    "metric": "operating_income",
+    "concept": "OperatingIncomeLoss",
+    "fiscal_year": 2022,
+    "value": 12121000000.0,
+    "unit": "USD",
+    "start": "2021-10-03",
+    "end": "2022-10-01",
+    "accession": "0001744489-24-000276",
+    "filed": "2024-11-14"
+   },
+   {
+    "metric": "operating_income",
+    "concept": "OperatingIncomeLoss",
+    "fiscal_year": 2023,
+    "value": 12863000000.0,
+    "unit": "USD",
+    "start": "2022-10-02",
+    "end": "2023-09-30",
+    "accession": "0001744489-24-000276",
+    "filed": "2024-11-14"
+   },
+   {
+    "metric": "operating_income",
+    "concept": "OperatingIncomeLoss",
+    "fiscal_year": 2024,
+    "value": 15601000000.0,
+    "unit": "USD",
+    "start": "2023-10-01",
+    "end": "2024-09-28",
+    "accession": "0001744489-24-000276",
+    "filed": "2024-11-14"
+   },
+   {
+    "metric": "net_income",
+    "concept": "NetIncomeLoss",
+    "fiscal_year": 2022,
+    "value": 3145000000.0,
+    "unit": "USD",
+    "start": "2021-10-03",
+    "end": "2022-10-01",
+    "accession": "0001744489-24-000276",
+    "filed": "2024-11-14"
+   },
+   {
+    "metric": "net_income",
+    "concept": "NetIncomeLoss",
+    "fiscal_year": 2023,
+    "value": 2354000000.0,
+    "unit": "USD",
+    "start": "2022-10-02",
+    "end": "2023-09-30",
+    "accession": "0001744489-24-000276",
+    "filed": "2024-11-14"
+   },
+   {
+    "metric": "net_income",
+    "concept": "NetIncomeLoss",
+    "fiscal_year": 2024,
+    "value": 4972000000.0,
+    "unit": "USD",
+    "start": "2023-10-01",
+    "end": "2024-09-28",
+    "accession": "0001744489-24-000276",
+    "filed": "2024-11-14"
+   },
+   {
+    "metric": "eps_diluted",
+    "concept": "EarningsPerShareDiluted",
+    "fiscal_year": 2022,
+    "value": 1.72,
+    "unit": "USD/shares",
+    "start": "2021-10-03",
+    "end": "2022-10-01",
+    "accession": "0001744489-24-000276",
+    "filed": "2024-11-14"
+   },
+   {
+    "metric": "eps_diluted",
+    "concept": "EarningsPerShareDiluted",
+    "fiscal_year": 2023,
+    "value": 1.29,
+    "unit": "USD/shares",
+    "start": "2022-10-02",
+    "end": "2023-09-30",
+    "accession": "0001744489-24-000276",
+    "filed": "2024-11-14"
+   },
+   {
+    "metric": "eps_diluted",
+    "concept": "EarningsPerShareDiluted",
+    "fiscal_year": 2024,
+    "value": 2.72,
+    "unit": "USD/shares",
+    "start": "2023-10-01",
+    "end": "2024-09-28",
+    "accession": "0001744489-24-000276",
+    "filed": "2024-11-14"
+   },
+   {
+    "metric": "capex",
+    "concept": "PaymentsToAcquirePropertyPlantAndEquipment",
+    "fiscal_year": 2022,
+    "value": 4943000000.0,
+    "unit": "USD",
+    "start": "2021-10-03",
+    "end": "2022-10-01",
+    "accession": "0001744489-24-000276",
+    "filed": "2024-11-14"
+   },
+   {
+    "metric": "capex",
+    "concept": "PaymentsToAcquirePropertyPlantAndEquipment",
+    "fiscal_year": 2023,
+    "value": 4969000000.0,
+    "unit": "USD",
+    "start": "2022-10-02",
+    "end": "2023-09-30",
+    "accession": "0001744489-24-000276",
+    "filed": "2024-11-14"
+   },
+   {
+    "metric": "capex",
+    "concept": "PaymentsToAcquirePropertyPlantAndEquipment",
+    "fiscal_year": 2024,
+    "value": 5412000000.0,
+    "unit": "USD",
+    "start": "2023-10-01",
+    "end": "2024-09-28",
+    "accession": "0001744489-24-000276",
+    "filed": "2024-11-14"
+   }
+  ]
+ },
+ {
+  "accession": "0001744489-25-000155",
+  "fiscal_year": 2025,
+  "filed": "2025-11-13",
+  "period_end": "2025-09-27",
+  "facts": [
+   {
+    "metric": "revenue",
+    "concept": "Revenues",
+    "fiscal_year": 2023,
+    "value": 88898000000.0,
+    "unit": "USD",
+    "start": "2022-10-02",
+    "end": "2023-09-30",
+    "accession": "0001744489-25-000155",
+    "filed": "2025-11-13"
+   },
+   {
+    "metric": "revenue",
+    "concept": "Revenues",
+    "fiscal_year": 2024,
+    "value": 91361000000.0,
+    "unit": "USD",
+    "start": "2023-10-01",
+    "end": "2024-09-28",
+    "accession": "0001744489-25-000155",
+    "filed": "2025-11-13"
+   },
+   {
+    "metric": "revenue",
+    "concept": "Revenues",
+    "fiscal_year": 2025,
+    "value": 94425000000.0,
+    "unit": "USD",
+    "start": "2024-09-29",
+    "end": "2025-09-27",
+    "accession": "0001744489-25-000155",
+    "filed": "2025-11-13"
+   },
+   {
+    "metric": "sga",
+    "concept": "SellingGeneralAndAdministrativeExpense",
+    "fiscal_year": 2023,
+    "value": 15336000000.0,
+    "unit": "USD",
+    "start": "2022-10-02",
+    "end": "2023-09-30",
+    "accession": "0001744489-25-000155",
+    "filed": "2025-11-13"
+   },
+   {
+    "metric": "sga",
+    "concept": "SellingGeneralAndAdministrativeExpense",
+    "fiscal_year": 2024,
+    "value": 15759000000.0,
+    "unit": "USD",
+    "start": "2023-10-01",
+    "end": "2024-09-28",
+    "accession": "0001744489-25-000155",
+    "filed": "2025-11-13"
+   },
+   {
+    "metric": "sga",
+    "concept": "SellingGeneralAndAdministrativeExpense",
+    "fiscal_year": 2025,
+    "value": 16501000000.0,
+    "unit": "USD",
+    "start": "2024-09-29",
+    "end": "2025-09-27",
+    "accession": "0001744489-25-000155",
+    "filed": "2025-11-13"
+   },
+   {
+    "metric": "operating_income",
+    "concept": "OperatingIncomeLoss",
+    "fiscal_year": 2023,
+    "value": 12863000000.0,
+    "unit": "USD",
+    "start": "2022-10-02",
+    "end": "2023-09-30",
+    "accession": "0001744489-25-000155",
+    "filed": "2025-11-13"
+   },
+   {
+    "metric": "operating_income",
+    "concept": "OperatingIncomeLoss",
+    "fiscal_year": 2024,
+    "value": 15601000000.0,
+    "unit": "USD",
+    "start": "2023-10-01",
+    "end": "2024-09-28",
+    "accession": "0001744489-25-000155",
+    "filed": "2025-11-13"
+   },
+   {
+    "metric": "operating_income",
+    "concept": "OperatingIncomeLoss",
+    "fiscal_year": 2025,
+    "value": 17551000000.0,
+    "unit": "USD",
+    "start": "2024-09-29",
+    "end": "2025-09-27",
+    "accession": "0001744489-25-000155",
+    "filed": "2025-11-13"
+   },
+   {
+    "metric": "net_income",
+    "concept": "NetIncomeLoss",
+    "fiscal_year": 2023,
+    "value": 2354000000.0,
+    "unit": "USD",
+    "start": "2022-10-02",
+    "end": "2023-09-30",
+    "accession": "0001744489-25-000155",
+    "filed": "2025-11-13"
+   },
+   {
+    "metric": "net_income",
+    "concept": "NetIncomeLoss",
+    "fiscal_year": 2024,
+    "value": 4972000000.0,
+    "unit": "USD",
+    "start": "2023-10-01",
+    "end": "2024-09-28",
+    "accession": "0001744489-25-000155",
+    "filed": "2025-11-13"
+   },
+   {
+    "metric": "net_income",
+    "concept": "NetIncomeLoss",
+    "fiscal_year": 2025,
+    "value": 12404000000.0,
+    "unit": "USD",
+    "start": "2024-09-29",
+    "end": "2025-09-27",
+    "accession": "0001744489-25-000155",
+    "filed": "2025-11-13"
+   },
+   {
+    "metric": "eps_diluted",
+    "concept": "EarningsPerShareDiluted",
+    "fiscal_year": 2023,
+    "value": 1.29,
+    "unit": "USD/shares",
+    "start": "2022-10-02",
+    "end": "2023-09-30",
+    "accession": "0001744489-25-000155",
+    "filed": "2025-11-13"
+   },
+   {
+    "metric": "eps_diluted",
+    "concept": "EarningsPerShareDiluted",
+    "fiscal_year": 2024,
+    "value": 2.72,
+    "unit": "USD/shares",
+    "start": "2023-10-01",
+    "end": "2024-09-28",
+    "accession": "0001744489-25-000155",
+    "filed": "2025-11-13"
+   },
+   {
+    "metric": "eps_diluted",
+    "concept": "EarningsPerShareDiluted",
+    "fiscal_year": 2025,
+    "value": 6.85,
+    "unit": "USD/shares",
+    "start": "2024-09-29",
+    "end": "2025-09-27",
+    "accession": "0001744489-25-000155",
+    "filed": "2025-11-13"
+   },
+   {
+    "metric": "operating_cash_flow",
+    "concept": "NetCashProvidedByUsedInOperatingActivities",
+    "fiscal_year": 2023,
+    "value": 9866000000.0,
+    "unit": "USD",
+    "start": "2022-10-02",
+    "end": "2023-09-30",
+    "accession": "0001744489-25-000155",
+    "filed": "2025-11-13"
+   },
+   {
+    "metric": "operating_cash_flow",
+    "concept": "NetCashProvidedByUsedInOperatingActivities",
+    "fiscal_year": 2024,
+    "value": 13971000000.0,
+    "unit": "USD",
+    "start": "2023-10-01",
+    "end": "2024-09-28",
+    "accession": "0001744489-25-000155",
+    "filed": "2025-11-13"
+   },
+   {
+    "metric": "operating_cash_flow",
+    "concept": "NetCashProvidedByUsedInOperatingActivities",
+    "fiscal_year": 2025,
+    "value": 18101000000.0,
+    "unit": "USD",
+    "start": "2024-09-29",
+    "end": "2025-09-27",
+    "accession": "0001744489-25-000155",
+    "filed": "2025-11-13"
+   },
+   {
+    "metric": "capex",
+    "concept": "PaymentsToAcquirePropertyPlantAndEquipment",
+    "fiscal_year": 2023,
+    "value": 4969000000.0,
+    "unit": "USD",
+    "start": "2022-10-02",
+    "end": "2023-09-30",
+    "accession": "0001744489-25-000155",
+    "filed": "2025-11-13"
+   },
+   {
+    "metric": "capex",
+    "concept": "PaymentsToAcquirePropertyPlantAndEquipment",
+    "fiscal_year": 2024,
+    "value": 5412000000.0,
+    "unit": "USD",
+    "start": "2023-10-01",
+    "end": "2024-09-28",
+    "accession": "0001744489-25-000155",
+    "filed": "2025-11-13"
+   },
+   {
+    "metric": "capex",
+    "concept": "PaymentsToAcquirePropertyPlantAndEquipment",
+    "fiscal_year": 2025,
+    "value": 8024000000.0,
+    "unit": "USD",
+    "start": "2024-09-29",
+    "end": "2025-09-27",
+    "accession": "0001744489-25-000155",
+    "filed": "2025-11-13"
+   }
+  ]
+ }
+]
